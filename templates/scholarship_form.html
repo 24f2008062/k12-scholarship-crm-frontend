@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}{{ action_title }}{% endblock %}
+
+{% block content %}
+<div class="container-xl" style="max-width: 760px;">
+
+  <div class="mb-3">
+    <a href="{{ url_for('dashboard') }}" class="text-decoration-none text-muted small">&larr; Back to Dashboard</a>
+  </div>
+
+  <div class="form-card">
+    <div class="border-bottom pb-3 mb-4">
+      <h1 class="h4 fw-bold mb-1">{{ action_title }}</h1>
+      <p class="text-muted small mb-0">Fill in the scholarship program details below.</p>
+    </div>
+
+    <form method="POST">
+      <div class="row g-3">
+
+        <div class="col-12">
+          <label for="name" class="form-label small fw-semibold">Scholarship Name <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" id="name" name="name" value="{{ form.name or '' }}" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="state" class="form-label small fw-semibold">State <span class="text-danger">*</span></label>
+          <select class="form-select" id="state" name="state" required>
+            <option value="" disabled {% if not form.state %}selected{% endif %}>Select state...</option>
+            {% for st in allowed_states %}
+              <option value="{{ st }}" {% if form.state == st %}selected{% endif %}>{{ st }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="status" class="form-label small fw-semibold">Status <span class="text-danger">*</span></label>
+          <select class="form-select" id="status" name="status" required>
+            {% for st in allowed_statuses %}
+              <option value="{{ st }}" {% if (form.status or 'Draft') == st %}selected{% endif %}>{{ st }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="col-md-6">
+          <label for="provider_name" class="form-label small fw-semibold">Provider / Department Name <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" id="provider_name" name="provider_name" value="{{ form.provider_name or '' }}" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="applicable_class" class="form-label small fw-semibold">Applicable Class <span class="text-danger">*</span></label>
+          <input type="text" class="form-control" id="applicable_class" name="applicable_class" value="{{ form.applicable_class or '' }}" placeholder="e.g. Class 11-12" required>
+        </div>
+
+        <div class="col-md-6">
+          <label for="deadline" class="form-label small fw-semibold">Application Deadline</label>
+          <input type="text" class="form-control" id="deadline" name="deadline" value="{{ form.deadline or '' }}" placeholder="e.g. 30 Sep 2026">
+        </div>
+
+        <div class="col-md-6">
+          <label for="application_link" class="form-label small fw-semibold">Official Application Link</label>
+          <input type="url" class="form-control" id="application_link" name="application_link" value="{{ form.application_link or '' }}" placeholder="https://...">
+        </div>
+
+        <div class="col-12">
+          <label for="eligibility_criteria" class="form-label small fw-semibold">Eligibility Criteria</label>
+          <textarea class="form-control" id="eligibility_criteria" name="eligibility_criteria" rows="3">{{ form.eligibility_criteria or '' }}</textarea>
+        </div>
+
+        <div class="col-12">
+          <label for="benefit" class="form-label small fw-semibold">Scholarship Amount & Benefit</label>
+          <textarea class="form-control" id="benefit" name="benefit" rows="2">{{ form.benefit or '' }}</textarea>
+        </div>
+
+      </div>
+
+      <div class="d-flex justify-content-end gap-2 border-top pt-3 mt-4">
+        <a href="{{ url_for('dashboard') }}" class="btn btn-outline-crm">Cancel</a>
+        <button type="submit" class="btn btn-primary-crm">{{ button_label }}</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+{% endblock %}

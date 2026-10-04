@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Preview: {{ scholarship.name }}{% endblock %}
+
+{% block content %}
+<div class="container-xl" style="max-width: 800px;">
+
+  <!-- Top Action Navigation -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <a href="{{ url_for('dashboard') }}" class="text-decoration-none text-muted small">&larr; Back to Dashboard</a>
+    <a href="{{ url_for('edit_scholarship', id=scholarship.id) }}" class="btn btn-outline-crm btn-sm">Edit Scholarship</a>
+  </div>
+
+  <!-- Student-Facing Preview Card -->
+  <div class="preview-card">
+    <div class="preview-header p-4 border-bottom">
+      <div class="mb-2">
+        <span class="state-pill me-2">{{ scholarship.state }}</span>
+        {% if scholarship.status == 'Published' %}
+          <span class="badge bg-success-subtle text-success border border-success-subtle">Published</span>
+        {% elif scholarship.status == 'Draft' %}
+          <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">Draft</span>
+        {% else %}
+          <span class="badge bg-secondary-subtle text-secondary border border-secondary-subtle">Expired</span>
+        {% endif %}
+      </div>
+      <h1 class="h4 fw-bold mb-1">{{ scholarship.name }}</h1>
+      <div class="text-secondary small">Provided by: <strong>{{ scholarship.provider_name }}</strong></div>
+    </div>
+
+    <div class="p-4 border-bottom bg-light">
+      <div class="row g-3">
+        <div class="col-sm-6">
+          <div class="text-muted small text-uppercase fw-semibold">Target Class</div>
+          <div class="fw-bold">{{ scholarship.applicable_class }}</div>
+        </div>
+        <div class="col-sm-6">
+          <div class="text-muted small text-uppercase fw-semibold">Application Deadline</div>
+          <div class="fw-bold {% if scholarship.deadline != 'Not stated' %}text-danger{% endif %}">{{ scholarship.deadline }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4">
+      <div class="mb-4">
+        <h2 class="h6 text-uppercase fw-bold text-secondary mb-2">Financial Grant & Benefits</h2>
+        <div class="benefit-box p-3">
+          <p class="mb-0 text-secondary">{{ scholarship.benefit or "Standard state financial assistance as per official departmental guidelines." }}</p>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <h2 class="h6 text-uppercase fw-bold text-secondary mb-2">Eligibility Requirements</h2>
+        <div class="p-3 border rounded bg-white">
+          <p class="mb-0 text-secondary">{{ scholarship.eligibility_criteria or "Must meet standard state domicile and educational qualification norms." }}</p>
+        </div>
+      </div>
+
+      <div class="pt-3 border-top d-flex justify-content-between align-items-center">
+        <span class="text-muted small">Official Application Portal</span>
+        {% if scholarship.application_link and (scholarship.application_link.startswith('http://') or scholarship.application_link.startswith('https://')) %}
+          <a href="{{ scholarship.application_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-primary-crm px-3">
+            Visit Official Website ↗
+          </a>
+        {% else %}
+          <span class="text-muted small fst-italic">Official application link not available</span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+</div>
+{% endblock %}

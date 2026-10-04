@@ -1,0 +1,23 @@
+# Python byte-compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# SQLite Database / Instance folder
+instance/
+*.db
+*.sqlite3
+
+# Filesystem temporary artifacts
+.fuse_hidden*
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# IDE / OS metadata
+.vscode/
+.idea/
+.DS_Store
+*.swp
