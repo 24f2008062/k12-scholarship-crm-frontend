@@ -7,7 +7,7 @@ A simple Scholarship Management CRM built as part of the **K12 Hunar Frontend De
 ## Live Demo & Repository
 
 - **Live Demo**: [Add deployed URL]
-- **Source Code**: [GitHub repository URL]
+- **Source Code**: https://github.com/24f2008062/k12-scholarship-front3nd
 
 ---
 
