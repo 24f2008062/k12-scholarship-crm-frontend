@@ -17,6 +17,17 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
 
+_db_initialized = False
+
+@app.before_request
+def ensure_database():
+    """Ensure database tables and initial seed data exist on request."""
+    global _db_initialized
+    if not _db_initialized:
+        db.create_all()
+        seed_database()
+        _db_initialized = True
+
 
 def validate_scholarship(data):
     """Simple server-side validation for scholarship form inputs."""
